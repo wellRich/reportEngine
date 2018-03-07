@@ -1,0 +1,22 @@
+<taglib>
+    <tlib-version>1.0</tlib-version>
+    <jsp-version>2.0</jsp-version>
+    <short-name>Example TLD with Body</short-name>
+    <tag>
+        <name>block</name>
+        <tag-class>com.gyk.tag.BlockTag</tag-class>
+        <body-content>tagdependent</body-content>
+        <attribute>
+            <name>name</name>
+        </attribute>
+    </tag>
+
+    <tag>
+        <name>overwrite</name>
+        <tag-class>com.gyk.tag.OverwriteTag</tag-class>
+        <body-content>tagdependent</body-content>
+        <attribute>
+            <name>name</name>
+        </attribute>
+    </tag>
+</taglib>
