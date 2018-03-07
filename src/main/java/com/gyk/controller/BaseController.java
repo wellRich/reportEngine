@@ -1,5 +1,5 @@
 package com.gyk.controller;
 
-public class BaseController {
-
+public abstract class BaseController {
+    abstract String view();
 }
