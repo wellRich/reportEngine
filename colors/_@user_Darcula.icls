@@ -1,0 +1,24 @@
+<scheme name="_@user_Darcula" version="142" parent_scheme="Darcula">
+  <metaInfo>
+    <property name="created">2017-10-27T13:27:55</property>
+    <property name="ide">idea</property>
+    <property name="ideVersion">2017.2.4.0.0</property>
+    <property name="modified">2017-10-27T13:36:30</property>
+    <property name="originalScheme">Darcula</property>
+  </metaInfo>
+  <attributes>
+    <option name="FOLDED_TEXT_ATTRIBUTES">
+      <value>
+        <option name="FOREGROUND" value="8c8c8c" />
+        <option name="BACKGROUND" value="4e3a3e" />
+      </value>
+    </option>
+    <option name="TEXT">
+      <value>
+        <option name="FOREGROUND" value="aeb5bd" />
+        <option name="BACKGROUND" value="c7edcc" />
+        <option name="EFFECT_TYPE" value="5" />
+      </value>
+    </option>
+  </attributes>
+</scheme>
