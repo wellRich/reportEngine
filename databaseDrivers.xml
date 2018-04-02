@@ -1,5 +1,9 @@
 <application>
   <component name="LocalDatabaseDriverManager" version="163">
+    <driver id="exasol">
+      <artifact name="Exasol" use="true" />
+      <option name="auto-sync" value="true" />
+    </driver>
     <driver id="h2.unified">
       <artifact name="H2" use="true" />
       <option name="auto-sync" value="true" />
@@ -7,6 +11,7 @@
     <driver id="azure.ms">
       <artifact name="SQL Server" use="true" />
       <option name="auto-sync" value="false" />
+      <option name="send-app-info" value="false" />
     </driver>
     <driver id="oracle">
       <artifact name="Oracle" use="true" />
@@ -55,6 +60,7 @@
     <driver id="sqlserver.ms">
       <artifact name="SQL Server" use="true" />
       <option name="auto-sync" value="true" />
+      <option name="send-app-info" value="false" />
     </driver>
     <driver id="9b4189db-e7b0-4279-862b-259d96d1d5c1" name="trunk dev driver" dialect="MySQL" driver-class="com.mysql.jdbc.Driver" icon="AllIcons.Providers.Mysql">
       <url-template name="default" template="jdbc:mysql://{host::localhost}?[:{port::3306}][/{database}?][\?&lt;&amp;,user={user},password={password},{:identifier}={:identifier}&gt;]" />
@@ -63,7 +69,7 @@
         <rewrite-parameter name="DBNAME" />
         <rewrite-parameter name="database" in-url="true" />
       </connection-bounds>
-      <artifact name="MySQL Connector/J" use="true" version="5.1.40" />
+      <artifact name="MySQL Connector/J" use="true" version="5.1.45" />
       <option name="auto-sync" value="true" />
       <option name="auto-commit" value="true" />
       <option name="send-app-info" value="true" />
