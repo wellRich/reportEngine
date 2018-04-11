@@ -6,9 +6,13 @@
           <option name="url" value="http://guoyk@10.1.8.15:8888/r/Server.git" />
           <option name="userName" value="" />
         </UrlAndUserName>
+        <UrlAndUserName>
+          <option name="url" value="https://github.com/pagehelper/Mybatis-PageHelper.git" />
+          <option name="userName" value="" />
+        </UrlAndUserName>
       </list>
     </option>
-    <option name="cloneParentDir" value="E:\workspace\digital\Server\人口与计生服务管理应用系统\区划代码管理分系统\SERVICE" />
+    <option name="cloneParentDir" value="E:\workspace" />
   </component>
   <component name="Vcs.Log.App.Settings">
     <option name="MIGRATED" value="true" />
