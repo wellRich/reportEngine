@@ -12,4 +12,11 @@
       <option name="JAVA_DECLARATION" value="true" />
     </context>
   </template>
+  <template name="cl" value="console.log(&quot;$data$----&gt; &quot;, $data$);" description="浏览器控制台输出日志" toReformat="false" toShortenFQNames="true">
+    <variable name="data" expression="" defaultValue="" alwaysStopAt="true" />
+    <context>
+      <option name="JAVA_SCRIPT" value="true" />
+      <option name="TypeScript" value="true" />
+    </context>
+  </template>
 </templateSet>
