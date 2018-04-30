@@ -24,6 +24,9 @@ public class ReportSql implements BaseSql<Report> {
         }
     };
 
+    public String batchInsert(Collection<Report> entities, boolean hasPrimary){
+        return entityDao.batchInsert(entities, hasPrimary);
+    }
 
     @Override
     public String pageSeek(QueryReq req, int pageIndex, int pageSize) {
@@ -43,6 +46,11 @@ public class ReportSql implements BaseSql<Report> {
     @Override
     public String insert(Object o) {
         return entityDao.insert(o);
+    }
+
+    @Override
+    public String add(Object o) {
+        return entityDao.add(0);
     }
 
     @Override
@@ -70,8 +78,8 @@ public class ReportSql implements BaseSql<Report> {
         return entityDao.get(o);
     }
 
-    @Override
-    public String batchDelete(Collection<?> keys) {
+    //@Override
+    public String batchDelete(String keys) {
         return entityDao.batchDelete(keys);
     }
 }

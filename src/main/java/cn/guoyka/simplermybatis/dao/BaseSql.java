@@ -35,6 +35,8 @@ public interface BaseSql<T extends Serializable> {
     }
 
     String insert(Object o);
+    String add(Object o);
+    String batchInsert(Collection<T> entities, boolean hasPrimary);
     String update(Object o);
     String delete(Object o);
     String get(Object o);
@@ -43,7 +45,7 @@ public interface BaseSql<T extends Serializable> {
     String countBy(String field, QueryFilter... filters);
     String findByIds(String ids);
     String findAll();
-    String batchDelete(Collection<?> keys);
+    String batchDelete(String keys);
 
 
 }

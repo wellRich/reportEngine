@@ -27,6 +27,8 @@ public interface BaseMapper<T> {
 
     public static final String INSERT = "insert";
 
+    public static final String ADD = "add";
+
     public static final String DELETE = "delete";
 
 
@@ -39,8 +41,19 @@ public interface BaseMapper<T> {
 
 
 
-    //插入
+    //插入, 会将主键一块插入
     int insert(Object o);
+
+
+    //插入，不会插入主键，适合主键自动生成的情景下使用
+    int add(Object o);
+
+    /**
+     * 批量插入实例
+     * @param entities 实例集合
+     * @param hasPrimary 是否需要插入主键值
+     */
+    void batchInsert(Collection<T> entities, boolean hasPrimary);
 
     //修改
     int update(Object o);

@@ -8,6 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.Arrays;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class SimplerMybatisApplicationTests {
@@ -17,13 +22,27 @@ public class SimplerMybatisApplicationTests {
 
 	@Test
 	public void contextLoads() {
-		reportMapper.insert(new Report(){{
-			setName("测试");
-			setNotes("说明！");
-			setTemplate("tpl");
-			setTitle("标题");
-			setType("标准报告");
-		}});
+		Set<Report> reportSet = new HashSet<>();
+		for(int i = 0; i < 10000; i ++){
+			reportSet.add(new Report(){{
+				setName("name_" + new Date().toString());
+			}});
+		}
+
+		long start = System.currentTimeMillis();
+
+		reportMapper.batchInsert( reportSet, false);
+
+
+		System.out.println("time--------> " + (System.currentTimeMillis() -start));
+
+
+
+	}
+
+	@Test
+	public void testBatchDelete(){
+		reportMapper.batchDelete("10024, 10025");
 	}
 
 }
