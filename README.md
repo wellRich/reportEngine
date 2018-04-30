@@ -20,6 +20,7 @@
 
 1. 充分利用`org.apache.ibatis.jdbc.SQL`这个类，使用它来将我们封装好的对象解析为原生sql或者是带有表达式的sql
 2. 使用EntityDao封装、储存实体类的属性、get方法、字段
+
     `package cn.guoyka.simplermybatis.dao;
 
 
