@@ -3,8 +3,8 @@ package cn.guoyka.simplermybatis.dao.sqlProvider;
 import cn.guoyka.simplermybatis.dao.BaseSql;
 import cn.guoyka.simplermybatis.dao.EntityDao;
 import cn.guoyka.simplermybatis.entity.Report;
-import cn.guoyka.simplermybatis.util.search.QueryFilter;
-import cn.guoyka.simplermybatis.util.search.QueryReq;
+import cn.guoyka.simplermybatis.util.search.SeekFilter;
+import cn.guoyka.simplermybatis.util.search.SeekReq;
 
 import java.util.Collection;
 
@@ -24,17 +24,23 @@ public class ReportSql implements BaseSql<Report> {
         }
     };
 
+    /**
+     * 批量插入
+     * @param entities 实例集合
+     * @param hasPrimary 是否需要插入主键
+     * @return sql
+     */
     public String batchInsert(Collection<Report> entities, boolean hasPrimary){
         return entityDao.batchInsert(entities, hasPrimary);
     }
 
     @Override
-    public String pageSeek(QueryReq req, int pageIndex, int pageSize) {
+    public String pageSeek(SeekReq req, int pageIndex, int pageSize) {
         return entityDao.pageSeek(req, pageIndex, pageSize);
     }
 
     @Override
-    public String countBy(String field, QueryFilter... filters) {
+    public String countBy(String field, SeekFilter... filters) {
         return entityDao.countBy(field, filters);
     }
 
@@ -69,7 +75,7 @@ public class ReportSql implements BaseSql<Report> {
     }
 
     @Override
-    public String seek(QueryReq req) {
+    public String seek(SeekReq req) {
         return entityDao.seek(req);
     }
 

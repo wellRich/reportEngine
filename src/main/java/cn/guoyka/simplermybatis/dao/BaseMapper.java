@@ -1,7 +1,7 @@
 package cn.guoyka.simplermybatis.dao;
 
-import cn.guoyka.simplermybatis.util.search.QueryFilter;
-import cn.guoyka.simplermybatis.util.search.QueryReq;
+import cn.guoyka.simplermybatis.util.search.SeekFilter;
+import cn.guoyka.simplermybatis.util.search.SeekReq;
 
 import java.util.Collection;
 import java.util.List;
@@ -100,14 +100,14 @@ public interface BaseMapper<T> {
      * @param pageSize 每页数量
      * @return list
      */
-    List<T> pageSeek(QueryReq req, int pageNum, int pageSize);
+    List<T> pageSeek(SeekReq req, int pageNum, int pageSize);
 
     /**
      * 通用查询
      * @param req 查询封装对象
      * @return list
      */
-    List<T> seek(QueryReq req);
+    List<T> seek(SeekReq req);
 
 
     /**
@@ -116,5 +116,5 @@ public interface BaseMapper<T> {
      * @param filters 若干过滤条件
      * @return 数目
      */
-    int countBy(String field, QueryFilter... filters);
+    int countBy(String field, SeekFilter... filters);
 }

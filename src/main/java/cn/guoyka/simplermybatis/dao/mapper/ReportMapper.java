@@ -3,8 +3,8 @@ package cn.guoyka.simplermybatis.dao.mapper;
 import cn.guoyka.simplermybatis.dao.BaseMapper;
 import cn.guoyka.simplermybatis.dao.sqlProvider.ReportSql;
 import cn.guoyka.simplermybatis.entity.Report;
-import cn.guoyka.simplermybatis.util.search.QueryFilter;
-import cn.guoyka.simplermybatis.util.search.QueryReq;
+import cn.guoyka.simplermybatis.util.search.SeekFilter;
+import cn.guoyka.simplermybatis.util.search.SeekReq;
 import org.apache.ibatis.annotations.*;
 
 import java.util.Collection;
@@ -58,16 +58,16 @@ public interface ReportMapper extends BaseMapper<Report>{
     @Override
     @SelectProvider(type = ReportSql.class, method = BaseMapper.PAGE_SEEK)
     @ResultMap(RESULT_MAP)
-    List<Report> pageSeek(QueryReq req, int pageNum, int pageSize);
+    List<Report> pageSeek(SeekReq req, int pageNum, int pageSize);
 
     @Override
     @SelectProvider(type = ReportSql.class, method = BaseMapper.SEEK)
     @ResultMap(RESULT_MAP)
-    List<Report> seek(QueryReq req);
+    List<Report> seek(SeekReq req);
 
     @Override
     @SelectProvider(type = ReportSql.class, method = BaseMapper.COUNT_BY)
-    int countBy(String field, QueryFilter... filters);
+    int countBy(String field, SeekFilter... filters);
 
     @SelectProvider(type = ReportSql.class, method = "batchInsert")
     void batchInsert(Collection<Report> entities, boolean hasPrimary);

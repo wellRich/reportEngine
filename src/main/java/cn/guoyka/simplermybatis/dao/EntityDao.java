@@ -6,14 +6,13 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.*;
 
-import org.apache.commons.lang.StringUtils;
+import cn.guoyka.simplermybatis.util.search.SeekFilter;
+import cn.guoyka.simplermybatis.util.search.SeekReq;
 import org.apache.ibatis.jdbc.SQL;
 import org.slf4j.LoggerFactory;
 
 import cn.guoyka.simplermybatis.annotation.Column;
 import cn.guoyka.simplermybatis.annotation.Table;
-import cn.guoyka.simplermybatis.util.search.QueryFilter;
-import cn.guoyka.simplermybatis.util.search.QueryReq;
 
 
 /**
@@ -40,8 +39,10 @@ public abstract class EntityDao<T extends Serializable> implements BaseSql<T> {
      */
     private String columns;
 
+    //众属性名称
     private List<String> fields = new ArrayList<>();
 
+    //主键以外的所有属性名称
     private List<String> fieldsExcPrimary = new ArrayList<>();
 
     /**
@@ -59,11 +60,22 @@ public abstract class EntityDao<T extends Serializable> implements BaseSql<T> {
      */
     private Map<String, String> fiesAndColsExcPrimary = new HashMap<>();
 
+    /**
+     * [属性：get方法]
+     */
     private Map<String, Method> fieldAndMethod = new HashMap<>();
 
+
+    /**
+     * 实体的class
+     */
     private Class<T> clazz;
 
 
+    /**
+     * 由具体的对象实现
+     * @return 实体类的class
+     */
     public abstract Class<T> init();
 
 
@@ -142,7 +154,7 @@ public abstract class EntityDao<T extends Serializable> implements BaseSql<T> {
             for (T entity : entities) {
                 StringBuilder sb = new StringBuilder("(");
 
-                for (String key : fieldsExcPrimary) {
+                for (String key : fields) {
                     Method m = fieldAndMethod.get(key);
                     Object val = m.invoke(entity);
                     sb.append("'").append(val).append("',");
@@ -266,17 +278,17 @@ public abstract class EntityDao<T extends Serializable> implements BaseSql<T> {
      * 批量更新实例
      *
      * @param params       需要更新的字段与值组成的键值对
-     * @param queryFilters 过滤条件
+     * @param seekFilters 过滤条件
      * @return sql
      */
-    public String batchUpdate(Map<String, Object> params, QueryFilter... queryFilters) {
+    public String batchUpdate(Map<String, Object> params, SeekFilter... seekFilters) {
         String sql = new SQL() {{
             UPDATE(getTableName());
             if (params instanceof Map) {
                 params.forEach((k, v) -> {
                     SET(getColumnByField(k.toString()) + "=#{" + k + "}");
                 });
-                parseFilters(this, queryFilters);
+                parseFilters(this, seekFilters);
             } else {
                 throw new IllegalArgumentException("只接收[属性:值]结构的map对象");
             }
@@ -320,7 +332,7 @@ public abstract class EntityDao<T extends Serializable> implements BaseSql<T> {
      * @param filters 过滤条件
      * @return sql
      */
-    public String countBy(String field, QueryFilter... filters) {
+    public String countBy(String field, SeekFilter... filters) {
         String sql = new SQL() {{
             FROM(tableName);
             if (field != null && "".equals(field)) {
@@ -347,8 +359,8 @@ public abstract class EntityDao<T extends Serializable> implements BaseSql<T> {
      * @param pageSize  每页大小
      * @return sql
      */
-    public String pageSeek(QueryReq req, int pageIndex, int pageSize) {
-        List<QueryFilter> filters = req.search;
+    public String pageSeek(SeekReq req, int pageIndex, int pageSize) {
+        List<SeekFilter> filters = req.search;
         int offset = (pageIndex - 1) * pageSize;
         String sql = new SQL() {{
             FROM(getTableName());
@@ -357,7 +369,7 @@ public abstract class EntityDao<T extends Serializable> implements BaseSql<T> {
             } else {
                 SELECT(req.selectFields);
             }
-            parseFilters(this, filters.toArray(new QueryFilter[]{}));
+            parseFilters(this, filters.toArray(new SeekFilter[]{}));
             if (req.sort != null) {
                 ORDER_BY(req.sort);
             }
@@ -373,8 +385,8 @@ public abstract class EntityDao<T extends Serializable> implements BaseSql<T> {
      * @param req 查询封装对象
      * @return sql
      */
-    public String seek(QueryReq req) {
-        List<QueryFilter> filters = req.search;
+    public String seek(SeekReq req) {
+        List<SeekFilter> filters = req.search;
         String sql = new SQL() {{
             FROM(getTableName());
             if (req.selectFields == null || req.selectFields.equals("")) {
@@ -382,7 +394,7 @@ public abstract class EntityDao<T extends Serializable> implements BaseSql<T> {
             } else {
                 SELECT(req.selectFields);
             }
-            parseFilters(this, filters.toArray(new QueryFilter[]{}));
+            parseFilters(this, filters.toArray(new SeekFilter[]{}));
             if (req.sort != null) {
                 ORDER_BY(req.sort);
             }
@@ -392,10 +404,10 @@ public abstract class EntityDao<T extends Serializable> implements BaseSql<T> {
         return sql;
     }
 
-    private void parseFilters(SQL sql, QueryFilter... queryFilters) {
+    private void parseFilters(SQL sql, SeekFilter... seekFilters) {
         sql.WHERE("1 = 1");
-        for (QueryFilter filter : queryFilters) {
-            if (filter.getLogic().equals(QueryFilter.LOGIC_AND)) {
+        for (SeekFilter filter : seekFilters) {
+            if (filter.getLogic().equals(SeekFilter.LOGIC_AND)) {
                 sql.AND();
                 sql.WHERE(filter.toSqlPart());
             } else {

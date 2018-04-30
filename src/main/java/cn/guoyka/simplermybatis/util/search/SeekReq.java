@@ -10,7 +10,7 @@ import java.util.List;
  * @author guoyka
  * @version 1.0, 2018/4/13
  */
-public class QueryReq implements Serializable{
+public class SeekReq implements Serializable{
     //public static final int DEFAULT_PAGE_SIZE = 10;
 
     //需要查询的属性
@@ -26,46 +26,46 @@ public class QueryReq implements Serializable{
 
 
     //查询条件
-    public List<QueryFilter> search = new ArrayList();
+    public List<SeekFilter> search = new ArrayList();
     //public String searchLogic = "AND";
 
     //默认查询条件，未用上
-    public List<QueryFilter> restrictions = new ArrayList();
+    public List<SeekFilter> restrictions = new ArrayList();
     //public Map extraData = new HashMap();
 
-    public QueryReq() {
+    public SeekReq() {
     }
 
 
 
 
-    public QueryReq(String selectFields) {
+    public SeekReq(String selectFields) {
         this.selectFields = selectFields;
     }
 /*
-    public QueryReq(String sort, Integer limit) {
+    public SeekReq(String sort, Integer limit) {
         this.sort = sort;
         this.limit = limit;
     }*/
 
-    public QueryReq(String sort, String selectFields) {
+    public SeekReq(String sort, String selectFields) {
         this.sort = sort;
         this.selectFields = selectFields;
     }
 
 
-  /*  public QueryReq(Integer limit, String selectFields) {
+  /*  public SeekReq(Integer limit, String selectFields) {
         this.limit = limit;
         this.selectFields = selectFields;
     }*/
 
-   /* public QueryReq(String sort, Integer limit, String selectFields) {
+   /* public SeekReq(String sort, Integer limit, String selectFields) {
         this.sort = sort;
         //this.limit = limit;
         this.selectFields = selectFields;
     }*/
 
-  /*  public QueryReq(String sort, Integer limit, Integer offset, Integer total, String selectFields) {
+  /*  public SeekReq(String sort, Integer limit, Integer offset, Integer total, String selectFields) {
         this.sort = sort;
       *//*  this.limit = limit;
         this.offset = offset;
@@ -77,7 +77,7 @@ public class QueryReq implements Serializable{
         return this.selectFields;
     }
 
-    public QueryReq setSelectFields(String selectFields) {
+    public SeekReq setSelectFields(String selectFields) {
         this.selectFields = selectFields;
         return this;
     }
@@ -86,7 +86,7 @@ public class QueryReq implements Serializable{
         return this.limit;
     }
 
-    public QueryReq setLimit(Integer limit) {
+    public SeekReq setLimit(Integer limit) {
         this.limit = limit;
         return this;
     }*/
@@ -95,7 +95,7 @@ public class QueryReq implements Serializable{
         return this.offset;
     }
 
-    public QueryReq setOffset(Integer offset) {
+    public SeekReq setOffset(Integer offset) {
         this.offset = offset;
         return this;
     }
@@ -104,7 +104,7 @@ public class QueryReq implements Serializable{
         return this.total;
     }
 
-    public QueryReq setTotal(Integer total) {
+    public SeekReq setTotal(Integer total) {
         this.total = total;
         return this;
     }*/
@@ -113,7 +113,7 @@ public class QueryReq implements Serializable{
         return this.sort;
     }
 
-    public QueryReq setSort(String sort) {
+    public SeekReq setSort(String sort) {
         this.sort = sort;
         return this;
     }
@@ -122,7 +122,7 @@ public class QueryReq implements Serializable{
         return this.searchLogic;
     }
 
-    public QueryReq setSearchLogic(String searchLogic) {
+    public SeekReq setSearchLogic(String searchLogic) {
         this.searchLogic = searchLogic;
         return this;
     }*/
@@ -131,37 +131,37 @@ public class QueryReq implements Serializable{
         return this.extraData;
     }
 
-    public QueryReq setExtraData(Map extraData) {
+    public SeekReq setExtraData(Map extraData) {
         this.extraData = extraData;
         return this;
     }
 */
-    public QueryReq addFilter(String field, Object value, String operator, String logic) {
-        return this.addFilter(new QueryFilter(field, value, operator, logic));
+    public SeekReq addFilter(String field, Object value, String operator, String logic) {
+        return this.addFilter(new SeekFilter(field, value, operator, logic));
     }
 
-    public QueryReq addFilter(String field, Object value, String operator) {
-        return this.addFilter(new QueryFilter(field, value, operator));
+    public SeekReq addFilter(String field, Object value, String operator) {
+        return this.addFilter(new SeekFilter(field, value, operator));
     }
 
-    public QueryReq addFilter(String field, Object value) {
-        return this.addFilter(field, value, QueryFilter.OPR_IS);
+    public SeekReq addFilter(String field, Object value) {
+        return this.addFilter(field, value, SeekFilter.OPR_IS);
     }
 
-    public QueryReq addFilter(QueryFilter filter) {
+    public SeekReq addFilter(SeekFilter filter) {
         this.search.add(filter);
         return this;
     }
 
-    public QueryReq addRestriction(String field, Object value, String operator) {
-        return this.addRestriction(new QueryFilter(field, value, operator));
+    public SeekReq addRestriction(String field, Object value, String operator) {
+        return this.addRestriction(new SeekFilter(field, value, operator));
     }
 
-    public QueryReq addRestriction(String field, Object value) {
-        return this.addRestriction(field, value, QueryFilter.OPR_IS);
+    public SeekReq addRestriction(String field, Object value) {
+        return this.addRestriction(field, value, SeekFilter.OPR_IS);
     }
 
-    public QueryReq addRestriction(QueryFilter filter) {
+    public SeekReq addRestriction(SeekFilter filter) {
         if (!this.exists(this.restrictions, filter.getField())) {
             this.restrictions.add(filter);
         }
@@ -182,17 +182,17 @@ public class QueryReq implements Serializable{
         return sb.toString();
     }
 
-    private boolean exists(List<QueryFilter> bucket, String field) {
+    private boolean exists(List<SeekFilter> bucket, String field) {
         Iterator queryFilterIterator = bucket.iterator();
 
-        QueryFilter queryFilter;
+        SeekFilter seekFilter;
         do {
             if (!queryFilterIterator.hasNext()) {
                 return false;
             }
 
-            queryFilter = (QueryFilter)queryFilterIterator.next();
-        } while(!queryFilter.getField().equals(field));
+            seekFilter = (SeekFilter)queryFilterIterator.next();
+        } while(!seekFilter.getField().equals(field));
 
         return true;
     }

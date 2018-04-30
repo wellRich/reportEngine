@@ -9,7 +9,10 @@ buildscript {
 		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
 		classpath 'org.springframework:springloaded:1.2.7.RELEASE'
 	}
+
 }
+
+
 
 apply plugin: 'java'
 apply plugin: 'org.springframework.boot'
@@ -38,6 +41,7 @@ dependencies {
     compile 'commons-lang:commons-lang:2.6'
 
     runtime('mysql:mysql-connector-java')
-	providedRuntime('org.springframework.boot:spring-boot-starter-tomcat')
+    providedRuntime 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    providedRuntime('org.springframework.boot:spring-boot-starter-tomcat')
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 }

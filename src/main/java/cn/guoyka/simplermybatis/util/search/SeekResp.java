@@ -11,7 +11,7 @@ import java.util.function.Supplier;
  * @author guoyka
  * @version 2018/3/21
  */
-public final class QueryResp<T>{
+public final class SeekResp<T>{
 
     /*
     数据总数
@@ -42,7 +42,7 @@ public final class QueryResp<T>{
      */
     private List<T> dataList;
 
-    public QueryResp() {
+    public SeekResp() {
     }
 
 
@@ -56,18 +56,18 @@ public final class QueryResp<T>{
      * @param <T> 泛型
      * @return 分页查询结果的封装对象
      */
-    public static <T> QueryResp<T> buildQueryResp( int pageIndex, int pageSize, int total, QueryReq req, BaseMapper<T> mapper){
-        QueryResp<T> resp = new QueryResp<T>(pageIndex, pageSize);
+    public static <T> SeekResp<T> buildQueryResp(int pageIndex, int pageSize, int total, SeekReq req, BaseMapper<T> mapper){
+        SeekResp<T> resp = new SeekResp<T>(pageIndex, pageSize);
         resp.query(() -> mapper.pageSeek(req, pageIndex, pageSize));
         if (total == 0){
-            resp.count(() -> mapper.countBy(null, req.search.toArray(new QueryFilter[]{})));
+            resp.count(() -> mapper.countBy(null, req.search.toArray(new SeekFilter[]{})));
         }else {
             resp.setTotalRecord(total);
         }
         return resp;
     }
 
-    public QueryResp(int pageIndex, int pageSize) {
+    public SeekResp(int pageIndex, int pageSize) {
         this.pageIndex = pageIndex;
         this.pageSize = pageSize;
         this.offset = (pageIndex - 1) * pageSize;

@@ -10,8 +10,8 @@ import java.io.Serializable;
  * @author guoyka
  * @version 1.0, 2018/4/13
  */
-public class QueryFilter implements Serializable {
-    protected static final org.slf4j.Logger log = LoggerFactory.getLogger(QueryFilter.class);
+public class SeekFilter implements Serializable {
+    protected static final org.slf4j.Logger log = LoggerFactory.getLogger(SeekFilter.class);
 
     public static final String OPR_IS = "=";
     public static final String OPR_IS_NOT = "!=";
@@ -38,7 +38,7 @@ public class QueryFilter implements Serializable {
     protected String operator = OPR_IS;
     protected String logic = LOGIC_AND;
 
-    public QueryFilter(String field, Object value, String operator, String logic) {
+    public SeekFilter(String field, Object value, String operator, String logic) {
         this.field = field;
         this.value = value;
         this.operator = operator;
@@ -46,14 +46,14 @@ public class QueryFilter implements Serializable {
     }
 
 
-    public QueryFilter(String field, Object value, String operator) {
+    public SeekFilter(String field, Object value, String operator) {
         this.field = field;
         this.value = value;
         this.operator = operator;
     }
 
 
-    public QueryFilter(String field, Object value) {
+    public SeekFilter(String field, Object value) {
         this.field = field;
         this.value = value;
     }
@@ -106,7 +106,7 @@ public class QueryFilter implements Serializable {
                     Object[] objects = (Object[])value;
                     sql.append(" ").append(field).append(" ").append(operator).append(" '").append(objects[0]).append("' AND '").append(objects[1]).append("'");
                 }catch (Exception ex){
-                    log.error("QueryFilter.toSqlPart---> " + ex.getMessage());
+                    log.error("SeekFilter.toSqlPart---> " + ex.getMessage());
                 }
 
                 break;

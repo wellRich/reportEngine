@@ -5,8 +5,8 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
 
-import cn.guoyka.simplermybatis.util.search.QueryFilter;
-import cn.guoyka.simplermybatis.util.search.QueryReq;
+import cn.guoyka.simplermybatis.util.search.SeekFilter;
+import cn.guoyka.simplermybatis.util.search.SeekReq;
 
 
 /**
@@ -40,9 +40,9 @@ public interface BaseSql<T extends Serializable> {
     String update(Object o);
     String delete(Object o);
     String get(Object o);
-    String seek(QueryReq req);
-    String pageSeek(QueryReq req, int pageIndex, int pageSize);
-    String countBy(String field, QueryFilter... filters);
+    String seek(SeekReq req);
+    String pageSeek(SeekReq req, int pageIndex, int pageSize);
+    String countBy(String field, SeekFilter... filters);
     String findByIds(String ids);
     String findAll();
     String batchDelete(String keys);
