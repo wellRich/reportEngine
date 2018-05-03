@@ -35,7 +35,7 @@ public abstract class EntityDao<T extends Serializable> implements BaseSql<T> {
     private String primaryField;
 
     /**
-     * 众列名称，以逗号分割的字符串
+     * 众列名称与属性的as连接，以逗号分割的字符串—— mc as name, da as big
      */
     private String columns;
 
@@ -108,7 +108,7 @@ public abstract class EntityDao<T extends Serializable> implements BaseSql<T> {
                         this.fieldsExcPrimary.add(fieldName);
                     }
                     this.fieldsAndCols.put(fieldName, colName);
-                    sb.append(colName).append(i < size - 1 ? "," : "");
+                    sb.append(colName).append(" AS ").append(fieldName).append(i < size - 1 ? "," : "");
                 }
             }
         } catch (NoSuchMethodException ex) {

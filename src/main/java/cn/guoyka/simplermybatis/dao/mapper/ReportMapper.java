@@ -18,8 +18,6 @@ import java.util.List;
  */
 @Mapper
 public interface ReportMapper extends BaseMapper<Report>{
-    String RESULT_MAP = "cn.guoyka.simplermybatis.entity.allOfReport";
-
     @Override
     @InsertProvider(type = ReportSql.class, method = BaseMapper.INSERT)
     int insert(Object o);
@@ -42,27 +40,22 @@ public interface ReportMapper extends BaseMapper<Report>{
 
     @Override
     @SelectProvider(type = ReportSql.class, method = BaseMapper.GET)
-    @ResultMap(RESULT_MAP)
     Report get(Object key);
 
     @Override
     @SelectProvider(type = ReportSql.class, method = BaseMapper.FIND_BY_IDS)
-    @ResultMap(RESULT_MAP)
     List<Report> findByIds(String ids);
 
     @Override
     @SelectProvider(type = ReportSql.class, method = BaseMapper.FIND_ALL)
-    @ResultMap(RESULT_MAP)
     List<Report> findAll();
 
     @Override
     @SelectProvider(type = ReportSql.class, method = BaseMapper.PAGE_SEEK)
-    @ResultMap(RESULT_MAP)
     List<Report> pageSeek(SeekReq req, int pageNum, int pageSize);
 
     @Override
     @SelectProvider(type = ReportSql.class, method = BaseMapper.SEEK)
-    @ResultMap(RESULT_MAP)
     List<Report> seek(SeekReq req);
 
     @Override
