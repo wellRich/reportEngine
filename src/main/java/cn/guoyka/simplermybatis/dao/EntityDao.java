@@ -134,10 +134,17 @@ public abstract class EntityDao<T extends Serializable> implements BaseSql<T> {
      * @param sel 查询的字段、表达式
      * @return
      */
-    public String transField(String sel){
+    public String transSelect(String sel){
 
         return null;
     }
+
+    //where子句的情况不同，只需转化fieldName 为 ColumnName
+    public String transWhere(String filter){
+
+        return null;
+    }
+
     //会插入主键
     public String insert(final Object entity) {
         String sql = new SQL() {{
