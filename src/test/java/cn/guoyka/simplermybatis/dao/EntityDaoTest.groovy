@@ -17,6 +17,6 @@ class EntityDaoTest extends GroovyTestCase {
             }
         }
 
-        dao.batchInsert([new Report(name: "111"), new Report(name: "112")])
+        dao.add(new Report());
     }
 }

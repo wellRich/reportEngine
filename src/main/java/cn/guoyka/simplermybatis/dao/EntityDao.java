@@ -17,7 +17,7 @@ import cn.guoyka.simplermybatis.annotation.Table;
 
 /**
  * CRUD的默认实现SqlProvider
- *
+ * 将
  * @author guoyka
  * @version 2018/3/17
  */
@@ -127,6 +127,17 @@ public abstract class EntityDao<T extends Serializable> implements BaseSql<T> {
         return new String(ch);
     }
 
+    /**
+     * 一个方法用于将fieldName转化成columnName as fieldName,或者 columnName
+     * 在表达式、函数中的fieldName只需要转化成columnName就可以，
+     * 而其它的select子句中的fieldName,一般需要转化成columnName as fieldName，以省去写@Results
+     * @param sel 查询的字段、表达式
+     * @return
+     */
+    public String transField(String sel){
+
+        return null;
+    }
     //会插入主键
     public String insert(final Object entity) {
         String sql = new SQL() {{
