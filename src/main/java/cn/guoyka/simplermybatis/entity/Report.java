@@ -12,7 +12,7 @@ import java.io.Serializable;
  * @author guoyka
  * @version 1.0, 2018/4/30
  */
-@Table(name = "sp_report", primaryKey = "id")
+@Table(name = "rpt_report", primaryKey = "id")
 public class Report implements Serializable{
 
     @Column(name = "id")

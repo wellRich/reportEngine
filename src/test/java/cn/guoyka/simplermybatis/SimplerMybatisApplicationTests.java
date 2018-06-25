@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.Arrays;
+import java.text.DateFormat;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -25,7 +25,7 @@ public class SimplerMybatisApplicationTests {
 		Set<Report> reportSet = new HashSet<>();
 		for(int i = 0; i < 10000; i ++){
 			reportSet.add(new Report(){{
-				setName("name_" + new Date().toString());
+				setName("name_" + Math.random() * 10);
 			}});
 		}
 

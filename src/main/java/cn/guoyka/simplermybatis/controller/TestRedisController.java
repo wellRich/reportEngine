@@ -1,11 +1,13 @@
 package cn.guoyka.simplermybatis.controller;
 
 import cn.guoyka.simplermybatis.dao.sqlProvider.ReportSql;
+import cn.guoyka.simplermybatis.service.ReportApiImpl;
 import cn.guoyka.simplermybatis.util.JSONHelper;
 import cn.guoyka.simplermybatis.util.redis.RedisClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.HashSet;
@@ -17,6 +19,23 @@ public class TestRedisController {
 
     @Autowired
     private RedisClient redisClinet;
+
+
+    @Autowired
+    private ReportApiImpl reportApi;
+
+    @RequestMapping("/findAll")
+    @ResponseBody
+    public Object findAllReport(){
+        return JSONHelper.toJSON(reportApi.findAll());
+    }
+
+
+    @RequestMapping("/findById")
+    @ResponseBody
+    public Object findById(@RequestParam("id") String id){
+        return JSONHelper.toJSON(reportApi.findById(id));
+    }
 
     /**
      * 设置key和value到redis

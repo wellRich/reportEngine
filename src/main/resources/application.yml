@@ -1,6 +1,6 @@
 #server
 server:
-  port: 9527
+  port: 8080
 
 
 #spring
@@ -37,3 +37,6 @@ spring:
            max-idle: 8
            min-idle: 0
            max-wait: -1ms
+       timeout: 6000ms
+logging:
+  file: E:\log\${spring.application.name}-${server.port}.log

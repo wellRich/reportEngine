@@ -25,11 +25,12 @@ public class RedisClient {
     /**
      * 添加key到redis数据库中
      */
-    public void set(String key, String value) throws Exception {
+    public void set(String key, String value) {
         ValueOperations<String, String> operations = redisTemplate.opsForValue();
         operations.set(key, value);
     }
-    public void set(String key, String value,int timeOut) throws Exception {
+
+    public void set(String key, String value,int timeOut){
         ValueOperations<String, String> operations = redisTemplate.opsForValue();
         int times = 0;
         if(timeOut>0){
@@ -39,19 +40,22 @@ public class RedisClient {
         }
         operations.set(key, value, times, TimeUnit.SECONDS);
     }
+
     /**
      * 取值key到redis数据库中
      */
-    public String get(String key) throws Exception  {
+    public String get(String key) {
         ValueOperations<String, String> operations = redisTemplate.opsForValue();
         return operations.get(key);
     }
+
     /**
      * 删除指定key
      */
     public void del(String key){
         redisTemplate.delete(key);
     }
+
     /**
      * 保存obj对象到redis数据库
      */
@@ -59,7 +63,8 @@ public class RedisClient {
         ValueOperations<Object, Object> operations = redisTemplate.opsForValue();
         operations.set(obj.getClass().getName(),obj);
     }
-    public void setObj(Object obj,int timeOut) throws Exception {
+
+    public void setObj(Object obj,int timeOut) {
         ValueOperations<Object, Object> operations = redisTemplate.opsForValue();
         int times = 0;
         if(timeOut>0){
@@ -69,6 +74,7 @@ public class RedisClient {
         }
         operations.set(obj.getClass().getName(),obj, times, TimeUnit.SECONDS);
     }
+
     /**
      * 根据指定o获取Object
      */
@@ -84,6 +90,7 @@ public class RedisClient {
     public void delObj(Object o){
         redisTemplate.delete(o);
     }
+
     /**
      * Set集合的赋值去取
      */
@@ -105,6 +112,7 @@ public class RedisClient {
     public void setMapCollections(String key,Map<String,Object> value){
         redisTemplate.opsForHash().putAll(key,value);
     }
+
     public String getMapCollections(String key){
         return JSONHelper.toJSON(redisTemplate.opsForHash().entries(key));
     }
@@ -120,6 +128,7 @@ public class RedisClient {
         String result =JSONHelper.toJSON(redisTemplate.opsForList().range(key, start, end));
         return result.substring(1,result.length()-1);
     }
+
     /**查询key的剩余存活时间*/
     public long getKeyExpireTime(String key){
         return  redisTemplate.getExpire(key);
@@ -135,6 +144,7 @@ public class RedisClient {
         }
         return  redisTemplate.expire(key,times,TimeUnit.SECONDS);
     }
+
     /**判断key是否存在*/
     public boolean exitsKey(String key){
         Object obj = redisTemplate.execute(new RedisCallback() {
