@@ -1,8 +1,11 @@
 package cn.guoyka.simplermybatis.conf;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +20,13 @@ import org.springframework.data.redis.cache.RedisCacheWriter;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
+import org.springframework.data.redis.serializer.RedisSerializer;
+import org.springframework.data.redis.serializer.SerializationException;
 
+import java.nio.charset.Charset;
 import java.time.Duration;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Configuration
@@ -27,14 +34,13 @@ import java.util.Set;
 public class RedisConfig  extends CachingConfigurerSupport {
     private Logger log = LoggerFactory.getLogger(RedisConfig.class);
 
-    @Autowired
-    private RedisConnectionFactory connectionFactory;
+
 
     /**
      * 缓存管理器
      * @return CacheManager
      */
-    @Bean
+    /*@Bean
     public CacheManager cacheManager() {
         RedisCacheManager.RedisCacheManagerBuilder builder = RedisCacheManager.RedisCacheManagerBuilder.fromConnectionFactory(connectionFactory);
         Set<String> cacheNames = new HashSet<String>() {{
@@ -50,10 +56,10 @@ public class RedisConfig  extends CachingConfigurerSupport {
         RedisCacheManager cacheManager =  builder.build();
         log.info("cacheManager.getCacheConfigurations()---------------> " + cacheManager.getCacheConfigurations());
         return cacheManager;
-    }
+    }*/
 
-
-   /* CacheManager cacheManager(RedisConnectionFactory connectionFactory) {
+    @Bean
+    CacheManager cacheManager(RedisConnectionFactory connectionFactory) {
         log.info("RedisConfig.cacheManager--------->");
 
         //初始化一个RedisCacheWriter
@@ -75,7 +81,7 @@ public class RedisConfig  extends CachingConfigurerSupport {
 
         log.info("cacheManager.getCacheConfigurations()---------------> " + cacheManager.getCacheConfigurations());
         return cacheManager;
-    }*/
+    }
 
 
     @Bean
@@ -89,11 +95,53 @@ public class RedisConfig  extends CachingConfigurerSupport {
         RedisTemplate<String, Object> template = new RedisTemplate<String, Object>();
         template.setConnectionFactory(redisConnectionFactory);
         template.setKeySerializer(jackson2JsonRedisSerializer);
-        template.setValueSerializer(jackson2JsonRedisSerializer);
+        template.setValueSerializer(FastJsonSerializer.INSTANCE.new ValueSerializer<>(Object.class));
         template.setHashKeySerializer(jackson2JsonRedisSerializer);
         template.setHashValueSerializer(jackson2JsonRedisSerializer);
         template.afterPropertiesSet();
+        template.getConnectionFactory().getConnection();
         return template;
+    }
+
+
+
+    private enum  FastJsonSerializer{
+        INSTANCE;
+
+        private final static Charset DEFAULT_CHARSET = Charset.forName("UTF-8");
+
+
+        private class ValueSerializer<T> implements RedisSerializer<T>{
+            private Class<T>  clazz;
+
+
+            public ValueSerializer(Class<T> clazz) {
+                super();
+                this.clazz = clazz;
+            }
+
+            @Override
+            public byte[] serialize(T t) throws SerializationException {
+                if(Objects.equals(t, null)){
+                    return new byte[0];
+                }else {
+                    return JSON.toJSONString(t, SerializerFeature.WriteClassName).getBytes(DEFAULT_CHARSET);
+                }
+            }
+
+            @Override
+            public T deserialize(byte[] bytes) throws SerializationException {
+                if (Objects.equals(bytes, null) || bytes.length <= 0) {
+                    return null;
+                }
+                String str = new String(bytes, DEFAULT_CHARSET);
+                return  JSON.parseObject(str, clazz);
+            }
+        }
+
+
+
+
     }
 
 }
