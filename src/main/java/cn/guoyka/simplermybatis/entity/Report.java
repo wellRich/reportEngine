@@ -21,8 +21,8 @@ public class Report implements Serializable{
     @Column(name = "name")
     private String name;
 
-    @Column(name = "template")
-    private String template;
+    @Column(name = "template_id")
+    private String templateId;
 
     @Column(name = "type")
     private String type;
@@ -50,12 +50,12 @@ public class Report implements Serializable{
         this.name = name;
     }
 
-    public String getTemplate() {
-        return template;
+    public String getTemplateId() {
+        return templateId;
     }
 
-    public void setTemplate(String template) {
-        this.template = template;
+    public void setTemplateId(String templateId) {
+        this.templateId = templateId;
     }
 
     public String getType() {

@@ -5,6 +5,7 @@ import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 import cn.guoyka.simplermybatis.util.search.SeekFilter;
 import cn.guoyka.simplermybatis.util.search.SeekReq;
@@ -78,6 +79,7 @@ public abstract class EntityDao<T extends Serializable> implements BaseSql<T> {
      */
     public abstract Class<T> init();
 
+    private static Map<String, EntityDao> boot = new ConcurrentHashMap<>();
 
     protected EntityDao() {
         log.info("entitySql无参构造器被调用------------> " + this);
@@ -117,6 +119,7 @@ public abstract class EntityDao<T extends Serializable> implements BaseSql<T> {
 
         this.columns = sb.toString();
         this.columnsExcPrimary = stringBuilder.toString();
+        boot.put(clazz.getName(), this);
     }
 
     private String upperCaseFirst(String str) {
@@ -125,6 +128,10 @@ public abstract class EntityDao<T extends Serializable> implements BaseSql<T> {
             ch[0] = (char) (ch[0] - 32);
         }
         return new String(ch);
+    }
+
+    public static EntityDao getDao(Class<?> eClass){
+        return boot.get(eClass.getName());
     }
 
     /**

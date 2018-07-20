@@ -5,6 +5,9 @@ import cn.guoyka.simplermybatis.dao.EntityDao;
 import cn.guoyka.simplermybatis.entity.Report;
 import cn.guoyka.simplermybatis.util.search.SeekFilter;
 import cn.guoyka.simplermybatis.util.search.SeekReq;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 
 import java.util.Collection;
 
@@ -15,14 +18,20 @@ import java.util.Collection;
  * @author guoyka
  * @version 1.0, 2018/4/30
  */
+@Component
 public class ReportSql implements BaseSql<Report> {
 
-    public static EntityDao entityDao = new EntityDao() {
+    public final static EntityDao<Report> entityDao = new EntityDao<Report>() {
         @Override
         public Class init() {
             return Report.class;
         }
     };
+
+
+    public static EntityDao<Report> getEntityDao() {
+        return entityDao;
+    }
 
     /**
      * 批量插入

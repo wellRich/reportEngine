@@ -60,7 +60,7 @@ public final class SeekResp<T>{
         SeekResp<T> resp = new SeekResp<T>(pageIndex, pageSize);
         resp.query(() -> mapper.pageSeek(req, pageIndex, pageSize));
         if (total == 0){
-            resp.count(() -> mapper.countBy(null, req.search.toArray(new SeekFilter[]{})));
+            resp.count(() -> mapper.countBy(null, (SeekFilter[]) req.search.toArray()));
         }else {
             resp.setTotalRecord(total);
         }
