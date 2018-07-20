@@ -4,17 +4,21 @@ import cn.guoyka.simplermybatis.dao.sqlProvider.ReportSql;
 import cn.guoyka.simplermybatis.service.ReportApiImpl;
 import cn.guoyka.simplermybatis.util.JSONHelper;
 import cn.guoyka.simplermybatis.util.redis.RedisClient;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiKeyAuthDefinition;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.HashSet;
 import java.util.Set;
 
 @Controller
-@RequestMapping({"/redis"})
+@RequestMapping({"/redis/test"})
 public class TestRedisController {
 
     @Autowired
@@ -30,7 +34,7 @@ public class TestRedisController {
         return JSONHelper.toJSON(reportApi.findAll());
     }
 
-
+    @ApiIgnore
     @RequestMapping("/findById")
     @ResponseBody
     public Object findById(@RequestParam("id") String id){
@@ -59,6 +63,7 @@ public class TestRedisController {
     /**
      * 设置object对象到redis
      */
+    @ApiKeyAuthDefinition(key = "Authorization", name = "Authorization", in = ApiKeyAuthDefinition.ApiKeyLocation.QUERY)
     @RequestMapping("/setObj")
     @ResponseBody
     public String setObj(ReportSql reportSql) throws Exception {

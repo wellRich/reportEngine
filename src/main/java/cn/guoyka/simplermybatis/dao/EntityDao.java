@@ -97,7 +97,7 @@ public abstract class EntityDao<T extends Serializable> implements BaseSql<T> {
                 field = fields[i];
                 fieldName = field.getName();
 
-                //只针对做了com.digital.util.search.Column注解的字段
+                //只针对做了@Column注解的字段
                 if (fields[i].isAnnotationPresent(Column.class)) {
                     this.fields.add(fieldName);
                     fieldAndMethod.put(fieldName, clazz.getMethod("get" + upperCaseFirst(fieldName)));
@@ -186,7 +186,6 @@ public abstract class EntityDao<T extends Serializable> implements BaseSql<T> {
         }
 
 
-        System.out.println("----" + re.toString().replaceAll("\\),$", ")"));
         String sql = new SQL() {{
             INSERT_INTO(tableName);
             INTO_COLUMNS(columnsExcPrimary);
@@ -194,7 +193,6 @@ public abstract class EntityDao<T extends Serializable> implements BaseSql<T> {
                 .replaceAll(",\\)", ")")
                 .replaceAll("'null'", "null")
                 .replaceAll("\\),$", ")");
-        log.info("entityDao.batchInsert.sql----> " + sql);
         return sql;
     }
 
