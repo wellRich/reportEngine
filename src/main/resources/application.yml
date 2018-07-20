@@ -38,6 +38,4 @@ spring:
            min-idle: 0
            max-wait: -1ms
     timeout: 6000ms
-
-logging:
-  file: E:\log\${spring.application.name}-${server.port}.log
+filePath: E:/var
