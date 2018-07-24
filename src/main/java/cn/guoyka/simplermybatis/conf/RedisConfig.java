@@ -72,6 +72,7 @@ public class RedisConfig  extends CachingConfigurerSupport {
         defaultCacheConfig.entryTtl(Duration.ofSeconds(15));
         log.info("defaultCacheConfig----------> " + defaultCacheConfig);
 
+
         Set<String> cacheNames = new HashSet<String>() {{
             add("codeNameCache");
         }};

@@ -2,6 +2,7 @@ package cn.guoyka.simplermybatis.controller;
 
 import cn.guoyka.simplermybatis.dao.sqlProvider.ReportSql;
 import cn.guoyka.simplermybatis.service.ReportApiImpl;
+import cn.guoyka.simplermybatis.service.TestProxyImpl;
 import cn.guoyka.simplermybatis.util.JSONHelper;
 import cn.guoyka.simplermybatis.util.redis.RedisClient;
 import io.swagger.annotations.Api;
@@ -18,7 +19,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Controller
-@RequestMapping({"/redis/test"})
+@RequestMapping({"/redis"})
 public class TestRedisController {
 
     @Autowired
@@ -78,6 +79,17 @@ public class TestRedisController {
     @ResponseBody
     public String getObj(ReportSql reportSql) throws Exception {
         return JSONHelper.toJSON(redisClinet.getObj(reportSql, ReportSql.class));
+    }
+
+    @Autowired
+    private TestProxyImpl testProxy;
+
+    @RequestMapping("/testT")
+    @ResponseBody
+    public String testT(){
+        testProxy.hi();
+        testProxy.test();
+        return "success: fa";
     }
 
 

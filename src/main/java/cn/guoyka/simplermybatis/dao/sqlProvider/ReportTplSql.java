@@ -26,7 +26,7 @@ public class ReportTplSql implements BaseSql<ReportTpl> {
 
     @Override
     public String insert(Object o) {
-        return null;
+        return entityDao.insert(o);
     }
 
     @Override

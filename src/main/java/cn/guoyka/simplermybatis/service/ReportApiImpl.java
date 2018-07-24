@@ -2,7 +2,10 @@ package cn.guoyka.simplermybatis.service;
 
 import cn.guoyka.simplermybatis.api.ReportApi;
 import cn.guoyka.simplermybatis.dao.mapper.ReportMapper;
+import cn.guoyka.simplermybatis.dao.mapper.ReportTplMapper;
 import cn.guoyka.simplermybatis.entity.Report;
+import cn.guoyka.simplermybatis.entity.ReportTpl;
+import cn.guoyka.simplermybatis.util.KeyGreaterUtil;
 import cn.guoyka.simplermybatis.util.redis.RedisClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.CacheManager;
@@ -19,6 +22,9 @@ public class ReportApiImpl implements ReportApi {
 
     @Autowired
     private ReportMapper reportMapper;
+
+    @Autowired
+    private ReportTplMapper reportTplMapper;
 
     @Autowired
     private RedisClient redisClient;
@@ -40,5 +46,14 @@ public class ReportApiImpl implements ReportApi {
     @Cacheable(value = "rpt-findById", key="#id")
     public Report findById(Object id){
         return reportMapper.get(id);
+    }
+
+
+    public void addReportTpl(){
+        ReportTpl report = new ReportTpl(){{
+            setTitle("测试");
+            setId(KeyGreaterUtil.greater('T'));
+        }};
+        reportTplMapper.insert(report);
     }
 }

@@ -6,6 +6,8 @@ import cn.guoyka.simplermybatis.service.MyInterceptor;
 import cn.guoyka.simplermybatis.service.ReportApiImpl;
 import cn.guoyka.simplermybatis.service.TestProxyImpl;
 import javafx.scene.input.DataFormat;
+import org.springframework.aop.framework.ProxyFactory;
+import org.springframework.cglib.proxy.Enhancer;
 
 import java.lang.reflect.Proxy;
 import java.text.DateFormat;
@@ -23,10 +25,18 @@ public class Test {
 
     @org.junit.Test
     public void testProxy(){
+        ProxyFactory proxyFactory = new ProxyFactory();
+
         TestProxy reportApi = new TestProxyImpl();
         MyInterceptor interceptor = new MyInterceptor(reportApi);
         TestProxy s = (TestProxy) Proxy.newProxyInstance(reportApi.getClass().getClassLoader(), reportApi.getClass().getInterfaces(), interceptor);
         s.hi();
         Arrays.stream(s.getClass().getInterfaces()).peek(e-> System.out.println(e.getSuperclass())).forEach(System.out::println);
+    }
+
+    @org.junit.Test
+    public void testCglib(){
+        Enhancer enhancer = new Enhancer();
+
     }
 }
